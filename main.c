@@ -3,6 +3,8 @@
 #include <stdlib.h>
 
 void displayFileContent(const char* filePath) {
+    DWORD bytesRead;
+    char buffer[1024];
     HANDLE handleFile = CreateFile(filePath, GENERIC_READ, 0, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
 
     if (handleFile == INVALID_HANDLE_VALUE) {
@@ -10,9 +12,6 @@ void displayFileContent(const char* filePath) {
         
         return;
     }
-
-    DWORD bytesRead;
-    char buffer[1024];
 
     printf("File content:\n");
     while (ReadFile(handleFile, buffer, sizeof(buffer) - 1, &bytesRead, NULL) && bytesRead > 0) {
@@ -23,6 +22,10 @@ void displayFileContent(const char* filePath) {
 }
 void appendCreationTime(const char* filePath) {
     FILETIME creationTime, lastAccessTime, lastWriteTime;
+    SYSTEMTIME systemTime;
+    DWORD bytesWritten;
+    char time[100];
+    
     HANDLE handleFile = CreateFile(filePath, FILE_WRITE_DATA | GENERIC_READ, 0, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
 
     if (handleFile == INVALID_HANDLE_VALUE) {
@@ -39,10 +42,8 @@ void appendCreationTime(const char* filePath) {
         return;
     }
 
-    SYSTEMTIME systemTime;
     FileTimeToSystemTime(&creationTime, &systemTime);
 
-    char time[100];
     sprintf(time, "\nTime of file creation: %02d-%02d-%04d %02d:%02d:%02d\n", 
         systemTime.wDay, 
         systemTime.wMonth, 
@@ -53,7 +54,6 @@ void appendCreationTime(const char* filePath) {
     );
 
     SetFilePointer(handleFile, 0, NULL, FILE_END);
-    DWORD bytesWritten;
     WriteFile(handleFile, time, strlen(time), &bytesWritten, NULL);
 
     printf("\nTime of file creation appended\n");
