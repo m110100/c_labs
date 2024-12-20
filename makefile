@@ -27,7 +27,7 @@ OBJECTS := $(OBJECTS:%.c=%.o)
 
 all: build
 
-build: $(NAME).elf $(NAME).hex size
+build: $(NAME).elf $(NAME).hex $(NAME).lst size
 
 envmake:
 	@echo VARIABLES:
