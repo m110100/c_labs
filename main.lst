@@ -1,0 +1,69 @@
+
+main.elf:     file format elf32-littlearm
+
+
+Disassembly of section .text:
+
+00000000 <__isr_vector>:
+   0:	2001c000 	.word	0x2001c000
+   4:	00000079 	.word	0x00000079
+   8:	0000009d 	.word	0x0000009d
+   c:	0000009d 	.word	0x0000009d
+  10:	0000009d 	.word	0x0000009d
+  14:	0000009d 	.word	0x0000009d
+  18:	0000009d 	.word	0x0000009d
+	...
+  2c:	0000009d 	.word	0x0000009d
+  30:	0000009d 	.word	0x0000009d
+  34:	00000000 	.word	0x00000000
+  38:	0000009d 	.word	0x0000009d
+  3c:	0000009d 	.word	0x0000009d
+  40:	0000009d 	.word	0x0000009d
+
+00000044 <_start>:
+  44:	f000 b800 	b.w	48 <main>
+
+00000048 <main>:
+  48:	4802      	ldr	r0, [pc, #8]	; (54 <stop+0x4>)
+  4a:	4903      	ldr	r1, [pc, #12]	; (58 <stop+0x8>)
+  4c:	f000 f806 	bl	5c <strcat>
+
+00000050 <stop>:
+  50:	e7fe      	b.n	50 <stop>
+  52:	0000      	.short	0x0000
+  54:	20000014 	.word	0x20000014
+  58:	000000a0 	.word	0x000000a0
+
+0000005c <strcat>:
+  5c:	4602      	mov	r2, r0
+  5e:	f812 3b01 	ldrb.w	r3, [r2], #1
+  62:	2b00      	cmp	r3, #0
+  64:	d1fb      	bne.n	5e <strcat+0x2>
+  66:	3a01      	subs	r2, #1
+  68:	f811 3b01 	ldrb.w	r3, [r1], #1
+  6c:	f802 3b01 	strb.w	r3, [r2], #1
+  70:	2b00      	cmp	r3, #0
+  72:	d1f9      	bne.n	68 <strcat+0xc>
+  74:	4770      	bx	lr
+  76:	bf00      	nop
+
+00000078 <Reset_Handler>:
+  78:	4905      	ldr	r1, [pc, #20]	; (90 <Reset_Handler+0x18>)
+  7a:	4a06      	ldr	r2, [pc, #24]	; (94 <Reset_Handler+0x1c>)
+  7c:	4b06      	ldr	r3, [pc, #24]	; (98 <Reset_Handler+0x20>)
+  7e:	429a      	cmp	r2, r3
+  80:	bfbe      	ittt	lt
+  82:	f851 0b04 	ldrlt.w	r0, [r1], #4
+  86:	f842 0b04 	strlt.w	r0, [r2], #4
+  8a:	e7f8      	blt.n	7e <Reset_Handler+0x6>
+  8c:	f7ff ffda 	bl	44 <_start>
+  90:	000000a4 	.word	0x000000a4
+  94:	20000000 	.word	0x20000000
+  98:	20000018 	.word	0x20000018
+
+0000009c <BusFault_Handler>:
+  9c:	e7fe      	b.n	9c <BusFault_Handler>
+  9e:	bf00      	nop
+
+000000a0 <str1>:
+  a0:	5453 0052                                   STR.
