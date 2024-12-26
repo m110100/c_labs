@@ -1,1 +1,6 @@
 .vscode
+fib_static.o
+fib_static.lib
+keyboard.o
+keyboard.dll
+main.exe
