@@ -1,5 +1,5 @@
-#ifndef FIB_STATIC_H
-#define FIB_STATIC_H
+#ifndef FIB_STATIC_HPP
+#define FIB_STATIC_HPP
 
 #ifdef FIB_STATIC_EXPORTS
     #define FIB_STATIC_API __declspec(dllexport)
@@ -9,6 +9,8 @@
     #define FIB_STATIC_API
 #endif
 
-extern "C" FIB_STATIC_API int Fibonacci(int n);
+namespace FibStatic {
+    FIB_STATIC_API int Fibonacci(int n);
+}
 
 #endif
