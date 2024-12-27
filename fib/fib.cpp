@@ -1,4 +1,4 @@
-#include "fib_static.hpp"
+#include "fib.h"
 
 int Fibonacci(int n) {
     if (n <= 0) return 0;
